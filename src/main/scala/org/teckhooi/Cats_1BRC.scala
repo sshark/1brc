@@ -49,5 +49,5 @@ object Cats_1BRC extends IOApp:
         in <- Resource.make[IO, BufferedReader](openFile(args.head))(reader =>
           IO.blocking(reader.close())
         )
-      } yield in).use(readLine) >>= (m => IO.println(s"${m.values.mkString("{", ", ", "}")}")))
+      } yield in).use(readLine) >>= (m => IO.println(s"${m.values.toVector.sortBy(_.name).mkString("{", ", ", "}")}")))
         .as(ExitCode.Success)

@@ -18,6 +18,7 @@ package dev.morling.onebrc;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,14 +26,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CalculateAverage_dqhieuu {
-    private static final String FILE = "measurements.txt";
+    private static final String FILE = "measurements_1000000.txt";
 
     private static double round(double value) {
         return Math.round(value * 10.0) / 10.0;
     }
 
     private static class MeasurementAggregator {
-        private Lock lock = new ReentrantLock();
+//        private Lock lock = new ReentrantLock();
         private double min = Double.POSITIVE_INFINITY;
         private double max = Double.NEGATIVE_INFINITY;
         private double sum = 0;
@@ -45,10 +46,10 @@ public class CalculateAverage_dqhieuu {
     }
 
     public static void main(String[] args) throws IOException {
-        var lineStream = Files.lines(Paths.get(FILE)).parallel();
+        var lineStream = Files.lines(Paths.get(args[0])); // faster without parallel()
 
-        Map<String, MeasurementAggregator> measurements = new ConcurrentHashMap<>(10_000);
-
+        Map<String, MeasurementAggregator> measurements = new HashMap<>(10_000);
+        
         lineStream.forEach(
                 l -> {
                     var sepIdx = 0;
@@ -74,7 +75,7 @@ public class CalculateAverage_dqhieuu {
 
                     var agg = measurements.computeIfAbsent(station, k -> new MeasurementAggregator());
 
-                    agg.lock.lock();
+//                    agg.lock.lock();
 
                     if (value < agg.min) {
                         agg.min = value;
@@ -85,7 +86,7 @@ public class CalculateAverage_dqhieuu {
                     agg.sum += value;
                     agg.count++;
 
-                    agg.lock.unlock();
+//                    agg.lock.unlock();
                 });
 
         Map<String, MeasurementAggregator> sortedEntries = new TreeMap<>(measurements);

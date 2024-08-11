@@ -65,7 +65,7 @@ public class CalculateAverage_linl33 {
     }
 
     public static void main() throws InterruptedException, IOException {
-        final var filePath = Paths.get(System.getProperty(FILE_PATH_PROPERTY, "./measurements.txt"));
+        final var filePath = Paths.get(System.getProperty(FILE_PATH_PROPERTY, "./measurements_10000.txt"));
 
         try (final var channel = FileChannel.open(filePath)) {
             final var inputMapped = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size(), Arena.global());

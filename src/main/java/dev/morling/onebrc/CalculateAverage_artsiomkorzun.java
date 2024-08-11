@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class CalculateAverage_artsiomkorzun {
 
-    private static final Path FILE = Path.of("./measurements.txt");
+    private static final Path FILE = Path.of("./measurements_1000000000.txt");
     private static final long SEGMENT_SIZE = 2 * 1024 * 1024;
     private static final long COMMA_PATTERN = 0x3B3B3B3B3B3B3B3BL;
     private static final long LINE_PATTERN = 0x0A0A0A0A0A0A0A0AL;

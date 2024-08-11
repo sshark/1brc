@@ -15,10 +15,6 @@ lazy val root = project
       "--release",
       "21",
       "--enable-preview",
-      "--add-modules",
-      "java.base,jdk.incubator.vector",
-      "--add-opens=java.base/java.lang=ALL-UNNAMED",
-      "--add-opens=java.base/jdk.internal.util=ALL-UNNAMED"
     ),
     libraryDependencies ++= Seq(
       "org.typelevel" %% "cats-effect"      % "3.5.4",
